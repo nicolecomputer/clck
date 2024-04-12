@@ -17,7 +17,7 @@ type model struct {
 func initializeModel() model {
 	return model{
 		currentTime: time.Now(),
-		timer:       timer.NewWithInterval(time.Hour*24, 1),
+		timer:       timer.NewWithInterval(time.Second*2, 1),
 	}
 }
 
@@ -34,6 +34,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case timer.TickMsg:
 		var cmd tea.Cmd
 		m.timer, cmd = m.timer.Update(msg)
+		m.timer.Timeout = time.Second * 2
 		m.currentTime = time.Now()
 		return m, cmd
 
